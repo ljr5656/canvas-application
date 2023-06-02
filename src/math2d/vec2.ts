@@ -53,4 +53,14 @@ export class vec2 {
     }
     return false;
   }
+
+  // 返回没有开根的向量大小
+  public get squaredLength(): number {
+    const [x, y] = this.values;
+    return x ** 2 + y ** 2;
+  }
+  // 返回真正的向量大小
+  public get length(): number {
+    return Math.sqrt(this.squaredLength);
+  }
 }
