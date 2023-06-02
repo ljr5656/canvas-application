@@ -1,6 +1,7 @@
+import math2D from './math2D';
+
 export class vec2 {
   values: Float32Array;
-  EPSILON: number = 0.00001;
   constructor(x: number = 0, y: number = 0) {
     this.values = new Float32Array([x, y]);
   }
@@ -45,10 +46,10 @@ export class vec2 {
 
   // 为了避免浮点数误差, 使用EPSILON进行容差处理
   public equals(vector: vec2): boolean {
-    if (Math.abs(this.values[0] - vector.values[0]) > this.EPSILON) {
+    if (Math.abs(this.values[0] - vector.values[0]) > math2D.EPSILON) {
       return false;
     }
-    if (Math.abs(this.values[1] - vector.values[1]) > this.EPSILON) {
+    if (Math.abs(this.values[1] - vector.values[1]) > math2D.EPSILON) {
       return false;
     }
     return false;
@@ -62,5 +63,29 @@ export class vec2 {
   // 返回真正的向量大小
   public get length(): number {
     return Math.sqrt(this.squaredLength);
+  }
+
+  // 计算向量方向
+  public normalize(): number {
+    let len: number = this.length;
+    if (math2D.isEquals(len, 0)) {
+      // 0向量
+      this.values[0] = 0;
+      this.values[1] = 0;
+      console.log('the length = 0');
+      return 0.0;
+    }
+    if (math2D.isEquals(len, 1)) {
+      // 单位向量
+      this.values[0] = 1;
+      this.values[1] = 1;
+      console.log('the length = 1');
+      return 1.0;
+    }
+
+    // 计算单位向量, 并返回向量大小
+    this.values[0] /= len;
+    this.values[1] /= len;
+    return len;
   }
 }
