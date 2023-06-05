@@ -160,11 +160,11 @@ export default class Application implements EventListenerObject {
   }
 
   // 虚方法 由子类override
-  dispatchMouseDown(evt: CanvasMouseEvent) {}
-  dispatchMouseUp(evt: CanvasMouseEvent) {}
-  dispatchMouseMove(evt: CanvasMouseEvent) {}
-  dispatchMouseDrag(evt: CanvasMouseEvent) {}
-  dispatchKeyPress(evt: CanvasKeyBoardEvent) {}
-  dispatchKeyDown(evt: CanvasKeyBoardEvent) {}
-  dispatchKeyUp(evt: CanvasKeyBoardEvent) {}
+  protected dispatchMouseDown(evt: CanvasMouseEvent) {}
+  protected dispatchMouseUp(evt: CanvasMouseEvent) {}
+  protected dispatchMouseMove(evt: CanvasMouseEvent) {}
+  protected dispatchMouseDrag(evt: CanvasMouseEvent) {}
+  protected dispatchKeyPress(evt: CanvasKeyBoardEvent) {}
+  protected dispatchKeyDown(evt: CanvasKeyBoardEvent) {}
+  protected dispatchKeyUp(evt: CanvasKeyBoardEvent) {}
 }
