@@ -93,4 +93,32 @@ export class vec2 {
     this.values[1] /= len;
     return len;
   }
+
+  public static sum(left: vec2, right: vec2, result: vec2 | null = null) {
+    if (result === null) {
+      result = new vec2();
+    }
+
+    result.values[0] = left.values[0] + right.values[0];
+    result.values[1] = left.values[1] + right.values[1];
+
+    return result;
+  }
+
+  public add(right: vec2): vec2 {
+    vec2.sum(this, right, this);
+    return this;
+  }
+
+  public static difference(end: vec2, start: vec2, result: vec2 | null = null) {
+    if (result === null) result = new vec2();
+    result.values[0] = end.values[0] - start.values[0];
+    result.values[1] = end.values[1] - start.values[1];
+    return result;
+  }
+
+  public substract(another: vec2): vec2 {
+    vec2.difference(this, another, this);
+    return this;
+  }
 }
