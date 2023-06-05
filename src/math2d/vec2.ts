@@ -127,4 +127,26 @@ export class vec2 {
     this.values[1] = -this.values[1];
     return this;
   }
+
+  public static scale(
+    direction: vec2,
+    scalar: number,
+    result: vec2 | null = null,
+  ) {
+    if (result === null) result = new vec2();
+    result.values[0] = direction.values[0] * scalar;
+    result.values[1] = direction.values[1] * scalar;
+    return result;
+  }
+  // result = start + result * scalar
+  public static scaleAdd(
+    start: vec2,
+    direction: vec2,
+    scalar: number,
+    result: vec2 | null = null,
+  ) {
+    if (result === null) result = new vec2();
+    vec2.scale(direction, scalar, result);
+    return vec2.sum(start, result, result);
+  }
 }
