@@ -149,4 +149,13 @@ export class vec2 {
     vec2.scale(direction, scalar, result);
     return vec2.sum(start, result, result);
   }
+
+  // 点积
+  public static dotProduct(left: vec2, right: vec2): number {
+    return left.values[0] * right.values[0] + left.values[1] * right.values[1];
+  }
+  // 内积
+  public innerPorduct(right: vec2): number {
+    return vec2.dotProduct(this, right);
+  }
 }
