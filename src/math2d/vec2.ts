@@ -121,4 +121,10 @@ export class vec2 {
     vec2.difference(this, another, this);
     return this;
   }
+
+  public nagative(): vec2 {
+    this.values[0] = -this.values[0];
+    this.values[1] = -this.values[1];
+    return this;
+  }
 }
