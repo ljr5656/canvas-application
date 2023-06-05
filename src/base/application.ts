@@ -88,9 +88,27 @@ export default class Application implements EventListenerObject {
   private _viewportToCanvasCoordinate(evt: MouseEvent): vec2 {
     if (this.canvas) {
       let rect: DOMRect = this.canvas.getBoundingClientRect();
-      let x: number = evt.clientX - rect.left;
-      let y: number = evt.clientY - rect.top;
-      return vec2.create(x, y);
+      if (evt.target) {
+        let borderLeftWidth: number = 0;
+        let borderTopWidth: number = 0;
+        let paddingLeft: number = 0;
+        let paddingTop: number = 0;
+
+        let decl: CSSStyleDeclaration = window.getComputedStyle(
+          evt.target as HTMLElement,
+        );
+        decl.borderLeftWidth &&
+          (borderLeftWidth = parseInt(decl.borderLeftWidth));
+        decl.borderTopWidth && (borderTopWidth = parseInt(decl.borderTopWidth));
+        decl.paddingLeft && (paddingLeft = parseInt(decl.paddingLeft));
+        decl.paddingTop && (paddingTop = parseInt(decl.paddingTop));
+
+        let x: number = evt.clientX - rect.left - borderLeftWidth - paddingLeft;
+        let y: number = evt.clientY - rect.top - borderTopWidth - paddingTop;
+        let pos: vec2 = vec2.create(x, y);
+        return pos;
+      }
+      throw new Error('target为null');
     }
     throw new Error('canvas为null');
   }
