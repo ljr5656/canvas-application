@@ -1,7 +1,12 @@
 import math2D from './math2D';
 
 export class vec2 {
-  values: Float32Array;
+  public values: Float32Array;
+  public static xAxis = new vec2(1, 0);
+  public static yAxis = new vec2(0, 1);
+  public static nXAxis = new vec2(-1, 0);
+  public static nYAxis = new vec2(0, -1);
+
   constructor(x: number = 0, y: number = 0) {
     this.values = new Float32Array([x, y]);
   }
