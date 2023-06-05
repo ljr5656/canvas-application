@@ -158,4 +158,26 @@ export class vec2 {
   public innerPorduct(right: vec2): number {
     return vec2.dotProduct(this, right);
   }
+
+  public static getAngle(a: vec2, b: vec2, isRadian: boolean = true) {
+    let dot: number = vec2.dotProduct(a, b);
+    let radian: number = Math.acos(dot / (a.length * b.length));
+    if (isRadian === false) {
+      radian = math2D.toDegree(radian);
+    }
+    return radian;
+  }
+
+  public static getOrientation(
+    from: vec2,
+    to: vec2,
+    isRadian: boolean = false,
+  ): number {
+    let diff: vec2 = vec2.difference(to, from);
+    let radian: number = Math.atan2(diff.y, diff.x);
+    if (isRadian === false) {
+      radian = math2D.toDegree(radian);
+    }
+    return radian;
+  }
 }
