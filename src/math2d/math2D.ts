@@ -15,4 +15,7 @@ export default class math2D {
   public static toDegree(radian: number): number {
     return radian / math2D.PiBy180;
   }
+  public static toRadian(degree: number): number {
+    return degree * math2D.PiBy180;
+  }
 }
