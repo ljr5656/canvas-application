@@ -13,12 +13,14 @@ export class TestCanvasApplication extends Canvas2DApplication {
 
     // this._drawRect(10, 10, this.canvas.width - 20, this.canvas.height - 20);
 
-    this._drawLineDashRect(
-      10,
-      10,
-      this.canvas.width - 20,
-      this.canvas.height - 20,
-    );
+    // this._drawLineDashRect(
+    //   10,
+    //   10,
+    //   this.canvas.width - 20,
+    //   this.canvas.height - 20,
+    // );
+
+    this._fillCircle(this.canvas.width / 2, this.canvas.height / 2, 100);
   }
 
   private _lineDashOffset: number = 0;
