@@ -31,4 +31,22 @@ export default class Canvas2DApplication extends Application {
     context2D.stroke();
     context2D.restore();
   }
+
+  // 圆形
+  protected _fillCircle(
+    x: number,
+    y: number,
+    r: number,
+    fillStyle: string | CanvasGradient | CanvasPattern = 'red',
+  ) {
+    const { context2D } = this;
+    if (context2D === null) return;
+
+    context2D.save();
+    context2D.fillStyle = fillStyle;
+    context2D.beginPath();
+    context2D.arc(x, y, r, 0, Math.PI * 2);
+    context2D.fill();
+    context2D.restore();
+  }
 }
