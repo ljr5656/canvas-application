@@ -1,4 +1,5 @@
 import { vec2 } from '../math2d/vec2';
+import { Timer, TimerCallback } from './Timer';
 import {
   CanvasMouseEvent,
   CanvasInputEvent,
@@ -58,6 +59,10 @@ export default class Application implements EventListenerObject {
     return this._start;
   }
 
+  private _fps: number = 0;
+  public get fps() {
+    return this._fps;
+  }
   public step(timeStamp: number): void {
     if (this._startTime === -1) this._startTime = timeStamp;
     if (this._lastTime === -1) this._lastTime = timeStamp;
@@ -65,9 +70,18 @@ export default class Application implements EventListenerObject {
     // 当前step执行时间与第一次执行时间的差
     let elapsedMsec: number = timeStamp - this._startTime;
     // 当前step执行时间与上一次执行时间的差
-    let intervalSec: number = (timeStamp - this._lastTime) / 1000;
+    let intervalSec: number = timeStamp - this._lastTime;
+
+    if (intervalSec !== 0) {
+      this._fps = 1000.0 / intervalSec;
+    }
+
+    intervalSec /= 1000.0;
+
     // 记录上一次的时间
     this._lastTime = timeStamp;
+
+    this._handleTimers(intervalSec);
 
     // 先更新
     this.update(elapsedMsec, intervalSec);
@@ -75,7 +89,7 @@ export default class Application implements EventListenerObject {
     this.render();
 
     // 递归调用, 形成循环
-    this._requestId = requestAnimationFrame(() => {
+    this._requestId = requestAnimationFrame((elapsedMsec) => {
       this.step(elapsedMsec);
     });
   }
@@ -185,4 +199,69 @@ export default class Application implements EventListenerObject {
   protected dispatchKeyPress(evt: CanvasKeyBoardEvent) {}
   protected dispatchKeyDown(evt: CanvasKeyBoardEvent) {}
   protected dispatchKeyUp(evt: CanvasKeyBoardEvent) {}
+
+  public timers: Timer[] = [];
+  private _timeId: number = -1;
+
+  public removeTimer(id: number): boolean {
+    let found: boolean = false;
+    for (let i = 0; i < this.timers.length; i++) {
+      if (this.timers[i].id === id) {
+        this.timers[i].enabled = false;
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+
+  public addTimer(
+    callback: TimerCallback,
+    timeout: number = 1.0,
+    onlyOnce: boolean = false,
+    data: any = undefined,
+  ): number {
+    let timer: Timer;
+    for (let i = 0; i < this.timers.length; i++) {
+      let timer: Timer = this.timers[i];
+      if (timer.enabled === false) {
+        timer.callback = callback;
+        timer.callbackData = data;
+        timer.timeout = timeout;
+        timer.countdown = timeout;
+        timer.enabled = true;
+        timer.onlyOnce = onlyOnce;
+        return timer.id;
+      }
+    }
+    // 不存在，就new一个新的Timer，并设置所有相关属性
+    timer = new Timer(callback);
+    timer.callbackData = data;
+    timer.timeout = timeout;
+    timer.countdown = timeout;
+    timer.enabled = true;
+    timer.id = ++this._timeId;
+    timer.onlyOnce = onlyOnce;
+    this.timers.push(timer);
+    return timer.id;
+  }
+
+  // 在step方法或update方法中调用
+  private _handleTimers(intervalSec: number): void {
+    this.timers.forEach((timer) => {
+      if (timer.enabled === true) {
+        timer.countdown -= intervalSec;
+        if (timer.countdown < 0.0) {
+          timer.callback(timer.id, timer.callbackData);
+
+          // 如果timer需要重复触发
+          if (timer.onlyOnce === false) {
+            timer.countdown = timer.timeout;
+          } else {
+            this.removeTimer(timer.id);
+          }
+        }
+      }
+    });
+  }
 }
