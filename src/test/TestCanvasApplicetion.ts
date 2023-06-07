@@ -3,7 +3,7 @@ import Canvas2DApplication from '../base/canvasApplication';
 export class TestCanvasApplication extends Canvas2DApplication {
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.addTimer(this.timeCallback.bind(this), 0.033);
+    // this.addTimer(this.timeCallback.bind(this), 0.033);
   }
 
   public render(): void {
@@ -20,7 +20,13 @@ export class TestCanvasApplication extends Canvas2DApplication {
     //   this.canvas.height - 20,
     // );
 
-    this._fillCircle(this.canvas.width / 2, this.canvas.height / 2, 100);
+    // this._fillCircle(this.canvas.width / 2, this.canvas.height / 2, 100);
+
+    // this._strokeLine(0, 0, 100, 100);
+
+    // this._strokeCoord(this.canvas.width / 2, this.canvas.height / 2, 100, -100);
+
+    this._strokeGrid();
   }
 
   private _lineDashOffset: number = 0;
