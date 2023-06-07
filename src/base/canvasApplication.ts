@@ -1,5 +1,22 @@
 import Application from './application';
 
+enum TextAlign {
+  START = 'start',
+  LEFT = 'left',
+  CENTER = 'center',
+  RIGHT = 'right',
+  END = 'end',
+}
+enum TextBaseline {
+  TOP = 'top',
+  MIDDLE = 'middle',
+  BOTTOM = 'bottom',
+}
+
+enum TextFontType {
+  NORMAL = '10px sans-serif',
+}
+
 export default class Canvas2DApplication extends Application {
   public context2D: CanvasRenderingContext2D | null = null;
   constructor(
@@ -94,5 +111,25 @@ export default class Canvas2DApplication extends Application {
     context2D.restore();
     this._fillCircle(0, 0, 5, 'green');
     this._strokeCoord(0, 0, canvas.width, canvas.height);
+  }
+
+  public fillText(
+    text: string,
+    x: number,
+    y: number,
+    color: string = 'black',
+    align: TextAlign = TextAlign.CENTER,
+    baseline: TextBaseline = TextBaseline.MIDDLE,
+    font: TextFontType = TextFontType.NORMAL,
+  ) {
+    const { context2D } = this;
+    if (context2D === null) return;
+    context2D.save();
+    context2D.textAlign = align;
+    context2D.textBaseline = baseline;
+    context2D.font = font;
+    context2D.fillStyle = color;
+    context2D.fillText(text, x, y);
+    context2D.restore();
   }
 }
