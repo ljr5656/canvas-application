@@ -109,8 +109,8 @@ export default class Canvas2DApplication extends Application {
       this._strokeLine(0, i, canvas.width, i);
     }
     context2D.restore();
-    this._fillCircle(0, 0, 5, 'green');
-    this._strokeCoord(0, 0, canvas.width, canvas.height);
+    // this._fillCircle(0, 0, 5, 'green');
+    // this._strokeCoord(0, 0, canvas.width, canvas.height);
   }
 
   public fillText(
@@ -131,5 +131,24 @@ export default class Canvas2DApplication extends Application {
     context2D.fillStyle = color;
     context2D.fillText(text, x, y);
     context2D.restore();
+  }
+
+  public drawCanvasCoordCenter(): void {
+    const { canvas, context2D } = this;
+    if (context2D === null) return;
+    let halfWidth: number = canvas.width * 0.5;
+    let halfHeight: number = canvas.height * 0.5;
+    context2D.save();
+    context2D.lineWidth = 2;
+    context2D.strokeStyle = 'rgba( 255 , 0 , 0 , 0.5 ) ';
+    this._strokeLine(0, halfHeight, canvas.width, halfHeight);
+    context2D.strokeStyle = 'rgba( 0 , 0 , 255 , 0.5 )';
+    this._strokeLine(halfWidth, 0, halfWidth, canvas.height);
+    context2D.restore();
+    this._fillCircle(halfWidth, halfHeight, 5, 'rgba(0 , 0 , 0 , 0.5 ) ');
+  }
+
+  public drawCoordInfo(info: string, x: number, y: number): void {
+    this.fillText(info, x, y);
   }
 }
