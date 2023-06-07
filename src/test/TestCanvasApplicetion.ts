@@ -1,9 +1,15 @@
 import Canvas2DApplication from '../base/canvasApplication';
+import { CanvasMouseEvent } from '../base/canvasInputEvent';
 
 export class TestCanvasApplication extends Canvas2DApplication {
+  private _mouseX: number = 0;
+  private _mouseY: number = 0;
+
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     // this.addTimer(this.timeCallback.bind(this), 0.033);
+
+    this.isSupportMouseMove = true;
   }
 
   public render(): void {
@@ -26,7 +32,13 @@ export class TestCanvasApplication extends Canvas2DApplication {
 
     // this._strokeCoord(this.canvas.width / 2, this.canvas.height / 2, 100, -100);
 
+    this.drawCanvasCoordCenter();
     this._strokeGrid();
+    this.drawCoordInfo(
+      `[${this._mouseX},${this._mouseY}]`,
+      this._mouseX,
+      this._mouseY,
+    );
   }
 
   private _lineDashOffset: number = 0;
@@ -64,5 +76,10 @@ export class TestCanvasApplication extends Canvas2DApplication {
     context2D.lineWidth = 2;
     context2D.setLineDash([10, 5]);
     this._drawRect(x, y, w, h);
+  }
+
+  protected dispatchMouseMove(evt: CanvasMouseEvent): void {
+    this._mouseX = evt.canvasPosition.x;
+    this._mouseY = evt.canvasPosition.y;
   }
 }
