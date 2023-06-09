@@ -50,7 +50,7 @@ export default class Canvas2DApplication extends Application {
   }
 
   // 圆形
-  protected _fillCircle(
+  public fillCircle(
     x: number,
     y: number,
     r: number,
@@ -67,7 +67,7 @@ export default class Canvas2DApplication extends Application {
     context2D.restore();
   }
 
-  protected _strokeLine(x0: number, y0: number, x1: number, y1: number): void {
+  public strokeLine(x0: number, y0: number, x1: number, y1: number): void {
     const { context2D } = this;
     if (context2D === null) return;
     context2D.beginPath();
@@ -86,9 +86,9 @@ export default class Canvas2DApplication extends Application {
     if (context2D === null) return;
     context2D.save();
     context2D.strokeStyle = 'red';
-    this._strokeLine(orginX, orginY, orginX + width, orginY);
+    this.strokeLine(orginX, orginY, orginX + width, orginY);
     context2D.strokeStyle = 'blue';
-    this._strokeLine(orginX, orginY, orginX, orginY + height);
+    this.strokeLine(orginX, orginY, orginX, orginY + height);
     context2D.restore();
   }
 
@@ -102,11 +102,11 @@ export default class Canvas2DApplication extends Application {
     context2D.lineWidth = 0.5;
 
     for (let i: number = interval + 0.5; i < canvas.width; i += interval) {
-      this._strokeLine(i, 0, i, canvas.height);
+      this.strokeLine(i, 0, i, canvas.height);
     }
 
     for (let i: number = interval + 0.5; i < canvas.height; i += interval) {
-      this._strokeLine(0, i, canvas.width, i);
+      this.strokeLine(0, i, canvas.width, i);
     }
     context2D.restore();
     // this._fillCircle(0, 0, 5, 'green');
@@ -141,11 +141,11 @@ export default class Canvas2DApplication extends Application {
     context2D.save();
     context2D.lineWidth = 2;
     context2D.strokeStyle = 'rgba( 255 , 0 , 0 , 0.5 ) ';
-    this._strokeLine(0, halfHeight, canvas.width, halfHeight);
+    this.strokeLine(0, halfHeight, canvas.width, halfHeight);
     context2D.strokeStyle = 'rgba( 0 , 0 , 255 , 0.5 )';
-    this._strokeLine(halfWidth, 0, halfWidth, canvas.height);
+    this.strokeLine(halfWidth, 0, halfWidth, canvas.height);
     context2D.restore();
-    this._fillCircle(halfWidth, halfHeight, 5, 'rgba(0 , 0 , 0 , 0.5 ) ');
+    this.fillCircle(halfWidth, halfHeight, 5, 'rgba(0 , 0 , 0 , 0.5 ) ');
   }
 
   public drawCoordInfo(info: string, x: number, y: number): void {
