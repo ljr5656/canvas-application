@@ -168,4 +168,57 @@ export class TreeNode<T> {
       return undefined;
     }
   }
+
+  //获取当前节点右兄弟节点
+  public get nextSibling(): TreeNode<T> | undefined {
+    if (this._parent === undefined) {
+      return undefined;
+    }
+    if (
+      this._parent._children !== undefined &&
+      this._parent._children.length > 1
+    ) {
+      let idx: number = -1;
+      for (let i = 0; i < this._parent._children.length; i++) {
+        if (this === this._parent._children[i]) {
+          idx = i;
+          break;
+        }
+      }
+
+      if (idx !== this._parent._children.length - 1) {
+        return this._parent._children[idx + 1];
+      } else {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  }
+
+  //获取当前节点左兄弟节点
+  public get prevSibling(): TreeNode<T> | undefined {
+    if (this._parent === undefined) {
+      return undefined;
+    }
+    if (
+      this._parent._children !== undefined &&
+      this._parent._children.length > 1
+    ) {
+      let idx: number = -1;
+      for (let i = 0; i < this._parent._children.length; i++) {
+        if (this === this._parent._children[i]) {
+          idx = i;
+          break;
+        }
+      }
+      if (idx !== 0) {
+        return this._parent._children[idx - 1];
+      } else {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  }
 }
