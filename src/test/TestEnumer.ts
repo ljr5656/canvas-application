@@ -127,4 +127,22 @@ function printNodeInfo(node: NumberNode): void {
 // root.visit(printNodeInfo, printNodeInfo, IndexerR2L);
 // // 先根和后根回调同时触发
 
-root.visitForward(printNodeInfo, null);
+// root.visitForward(printNodeInfo, null);
+
+for (
+  let n: TreeNode<number> | undefined = root;
+  n !== undefined;
+  n = n.moveNext()
+) {
+  // 缩进层次输出节点名
+  console.log('moveNext : ' + n.repeatString(' ', n.depth * 4) + n.name);
+}
+
+for (
+  let n: TreeNode<number> | undefined = root;
+  n !== undefined;
+  n = n.movePrev()
+) {
+  // 缩进层次输出节点名
+  console.log('movePrev : ' + n.repeatString(' ', n.depth * 4) + n.name);
+}

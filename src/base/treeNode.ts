@@ -327,6 +327,52 @@ export class TreeNode<T> {
       postOrderFunc(this);
     }
   }
+
+  // 深度优先, 从上到下, 从左到右, 非递归遍历算法
+  public moveNext(): TreeNode<T> | undefined {
+    let ret: TreeNode<T> | undefined = this.firstChild;
+    if (ret !== undefined) {
+      return ret;
+    }
+
+    ret = this.nextSibling;
+    if (ret !== undefined) {
+      return ret;
+    }
+
+    ret = this;
+    while (ret !== undefined && ret.nextSibling === undefined) {
+      ret = ret.parent;
+    }
+    if (ret !== undefined) {
+      return ret.nextSibling;
+    }
+
+    return undefined;
+  }
+
+  // 深度优先, 从上到下, 从右到左, 非递归遍历算法
+  public movePrev(): TreeNode<T> | undefined {
+    let ret: TreeNode<T> | undefined = this.lastChild;
+    if (ret !== undefined) {
+      return ret;
+    }
+
+    ret = this.prevSibling;
+    if (ret !== undefined) {
+      return ret;
+    }
+
+    ret = this;
+    while (ret !== undefined && ret.prevSibling === undefined) {
+      ret = ret.parent;
+    }
+    if (ret !== undefined) {
+      return ret.prevSibling;
+    }
+
+    return undefined;
+  }
 }
 
 export type NodeCallback<T> = (node: TreeNode<T>) => void;
