@@ -152,4 +152,20 @@ export class TreeNode<T> {
     }
     return level;
   }
+
+  public get firstChild(): TreeNode<T> | undefined {
+    if (this._children !== undefined && this._children.length > 0) {
+      return this._children[0];
+    } else {
+      return undefined;
+    }
+  }
+
+  public get lastChild(): TreeNode<T> | undefined {
+    if (this._children !== undefined && this._children.length > 0) {
+      return this._children[this._children.length - 1];
+    } else {
+      return undefined;
+    }
+  }
 }
