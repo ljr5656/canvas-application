@@ -221,4 +221,40 @@ export class TreeNode<T> {
       return undefined;
     }
   }
+
+  //获取当前树最左侧节点
+  public get mostLeft(): TreeNode<T> | undefined {
+    let node: TreeNode<T> | undefined = this;
+    // 以深度优先方式不断调用firstChild
+    while (true) {
+      let subNode: TreeNode<T> | undefined = undefined;
+      if (node !== undefined) {
+        subNode = node.firstChild;
+      }
+      if (subNode === undefined) {
+        break;
+      }
+      node = subNode;
+    }
+
+    return node;
+  }
+
+  //获取当前树最右侧节点
+  public get mosrRight(): TreeNode<T> | undefined {
+    let node: TreeNode<T> | undefined = this;
+    // 以深度优先方式不断调用lastChild
+    while (true) {
+      let subNode: TreeNode<T> | undefined = undefined;
+      if (node !== undefined) {
+        subNode = node.lastChild;
+      }
+      if (subNode === undefined) {
+        break;
+      }
+      node = subNode;
+    }
+
+    return node;
+  }
 }
