@@ -132,4 +132,24 @@ export class TreeNode<T> {
   public get children(): TreeNode<T>[] | undefined {
     return this._children;
   }
+
+  // 获取根节点
+  public get root(): TreeNode<T> | undefined {
+    let curr: TreeNode<T> | undefined = this;
+    while (curr !== undefined && curr.parent !== undefined) {
+      curr = curr.parent;
+    }
+    return curr;
+  }
+
+  // 获取当前节点深度
+  public get depth(): number {
+    let curr: TreeNode<T> | undefined = this;
+    let level = 0;
+    while (curr !== undefined && curr.parent !== undefined) {
+      curr = curr.parent;
+      level++;
+    }
+    return level;
+  }
 }
