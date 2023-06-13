@@ -667,3 +667,60 @@ export class LinkTreeNode<T> {
   public name: string = '';
   public data: T | undefined;
 }
+
+export class NodeData {
+  public parentIdx: number;
+  public name: string;
+  constructor(name: string, parentIdx: number) {
+    this.parentIdx = parentIdx;
+    this.name = name;
+  }
+
+  public static convertTreeToJsonString<T>(node: TreeNode<T>) {
+    let nodes: Array<TreeNode<T>> = [];
+    let datas: Array<NodeData> = [];
+    for (
+      let n: TreeNode<T> | undefined = node;
+      n !== undefined;
+      n = n.moveNext()
+    ) {
+      datas.push(new NodeData(n.name, -1));
+      nodes.push(n);
+    }
+
+    for (let i = 0; i < datas.length; i++) {
+      let parent: TreeNode<T> | undefined = nodes[i].parent;
+      if (parent === undefined) {
+        datas[i].parentIdx = -1;
+      } else {
+        for (let j = 0; j < datas.length; j++) {
+          if (parent === nodes[j]) {
+            datas[i].parentIdx = j;
+          }
+        }
+      }
+    }
+
+    return JSON.stringify(datas);
+  }
+
+  public static convertJsonStringToTree<T>(
+    json: string,
+  ): TreeNode<T> | undefined {
+    let datas: [] = JSON.parse(json);
+    let data!: NodeData;
+    let nodes: TreeNode<T>[] = [];
+    for (let i = 0; i < datas.length; i++) {
+      data = data[i] as NodeData;
+      if (data.parentIdx === -1) {
+        nodes.push(new TreeNode<T>(undefined, undefined, data.name));
+      } else {
+        nodes.push(
+          new TreeNode<T>(undefined, nodes[data.parentIdx], data.name),
+        );
+      }
+    }
+
+    return nodes[0];
+  }
+}
