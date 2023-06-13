@@ -129,20 +129,35 @@ function printNodeInfo(node: NumberNode): void {
 
 // root.visitForward(printNodeInfo, null);
 
-for (
-  let n: TreeNode<number> | undefined = root;
-  n !== undefined;
-  n = n.moveNext()
-) {
-  // 缩进层次输出节点名
-  console.log('moveNext : ' + n.repeatString(' ', n.depth * 4) + n.name);
-}
+// for (
+//   let n: TreeNode<number> | undefined = root;
+//   n !== undefined;
+//   n = n.moveNext()
+// ) {
+//   // 缩进层次输出节点名
+//   console.log('moveNext : ' + n.repeatString(' ', n.depth * 4) + n.name);
+// }
+
+// for (
+//   let n: TreeNode<number> | undefined = root;
+//   n !== undefined;
+//   n = n.movePrev()
+// ) {
+//   // 缩进层次输出节点名
+//   console.log('movePrev : ' + n.repeatString(' ', n.depth * 4) + n.name);
+// }
 
 for (
-  let n: TreeNode<number> | undefined = root;
+  let n: TreeNode<number> | undefined = root.mostLeft;
   n !== undefined;
-  n = n.movePrev()
+  n = n.moveNextPost()
 ) {
-  // 缩进层次输出节点名
-  console.log('movePrev : ' + n.repeatString(' ', n.depth * 4) + n.name);
+  console.log('moveNextPost : ' + n.repeatString(' ', n.depth * 4) + n.name);
+}
+for (
+  let n: TreeNode<number> | undefined = root.mostRight;
+  n !== undefined;
+  n = n.movePrevPost()
+) {
+  console.log('movePrevPost : ' + n.repeatString(' ', n.depth * 4) + n.name);
 }

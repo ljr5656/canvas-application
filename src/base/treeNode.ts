@@ -241,7 +241,7 @@ export class TreeNode<T> {
   }
 
   //获取当前树最右侧节点
-  public get mosrRight(): TreeNode<T> | undefined {
+  public get mostRight(): TreeNode<T> | undefined {
     let node: TreeNode<T> | undefined = this;
     // 以深度优先方式不断调用lastChild
     while (true) {
@@ -372,6 +372,32 @@ export class TreeNode<T> {
     }
 
     return undefined;
+  }
+
+  // 深度优先, 从下到上, 从左到右, 非递归遍历算法
+  public moveNextPost(): TreeNode<T> | undefined {
+    let next: TreeNode<T> | undefined = this.nextSibling;
+    if (next === undefined) {
+      return this.parent;
+    }
+    let first: TreeNode<T> | undefined = undefined;
+    while (next !== undefined && (first = next.firstChild)) {
+      next = first;
+    }
+    return next;
+  }
+
+  // 深度优先, 从下到上, 从左到右, 非递归遍历算法
+  public movePrevPost(): TreeNode<T> | undefined {
+    let prev: TreeNode<T> | undefined = this.prevSibling;
+    if (prev === undefined) {
+      return this.parent;
+    }
+    let last: TreeNode<T> | undefined = undefined;
+    while (prev !== undefined && (last = prev.lastChild)) {
+      prev = last;
+    }
+    return prev;
   }
 }
 
